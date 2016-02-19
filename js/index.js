@@ -79,7 +79,6 @@ map.on('style.load', function() {
             layers: ['airport-fills', 'parks']
           }, function(err, features) {
             var display = "";
-            console.log(features);
             if(!err || features.length) {
               for(var i = 0; i < features.length; ++i) {
                 if(features[i].layer.id == "airport-fills") {
@@ -105,5 +104,21 @@ map.on('style.load', function() {
         });
 });
 
-navigator.geolocation.getCurrentPosition(success, fail, options);
+var close_about = function(e)
+{
+  var about = document.getElementById("about");
+  about.style.display = "none";
+}
+var open_about = function(e)
+{
+  var about = document.getElementById("about");
+  about.style.display = "block";
+}
 
+
+var element = document.getElementById("close_data");
+element.addEventListener("click", close_about, false);
+var widget = document.getElementById("widget");
+widget.addEventListener("click", open_about, false);
+
+navigator.geolocation.getCurrentPosition(success, fail, options);

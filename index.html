@@ -7,14 +7,35 @@
     <script src='https://api.tiles.mapbox.com/mapbox-gl-js/v0.14.1/mapbox-gl.js'></script>
     <link href='https://api.tiles.mapbox.com/mapbox-gl-js/v0.14.1/mapbox-gl.css' rel='stylesheet' />
     <style>
-          body { margin:0; padding:0; }
-          #map { position:absolute; top:0; bottom:0; width:100%; }
+          body { margin:0; padding:0; font: 12px 'Helvetica Neue', Arial, Helvetica, sans-serif; }
+          #map { position:absolute; top: 50px; bottom:0; width:100%; }
+          #widget { position: absolute; top: 0; left: 0; z-index: 1; width: 100%; background-color: #ffffff; opacity: 0.8; padding-left: 10px; }
+          #about { position: absolute; top: 30%; left: 33%; width: 30%; z-index: 1; background-color: #ffffff; padding: 10px; }
+          #about h2 { text-align: center; }
+          #credits { font-size: 8px;}
     </style>
   </head>
   <body>
-    <div id="header"></div>
+    <div id="widget">
+      <h2>Don't Fly Here</h2>
+    </div>
+    <div id="about">
+      <h2>Don't Fly Here</h2>
+      <p>This is a map of the areas that either have an explicit ban on Recreational UAV flights, or 
+        are areas where it's highly recommended that you don't fly.  This includes the following: </p>
+      <ul>
+        <li>Anywhere within 9 km from an Airport, Heliport, or Aerodrome (Water Airport)</li>
+        <li><a href="http://www.cbc.ca/news/canada/calgary/drones-national-parks-1.3354704">National Parks</a></li>
+      </ul>
+      <p>This is a non-exhaustive list and is a work in progress.  This is for information purposes only. Always check 
+        with a secondary resource like Transport Canada before flying.</p>
+      <h2><a id="close_data" href="#top">View the map</a></h2>
+      <div id="credits">
+        Public Domain Airport Data from <a href="http://ourairports.com/data/">OurAirports.com</a><br />
+        National Parks Data from GeoGratis, licensed under the <a href="http://open.canada.ca/en/open-government-licence-canada">Open Government Licence - Canada.</a>
+      </div>
+    </div>
     <div id='map'></div>
-    <div id="popup"></div>
     <script src="js/index.js"></script>
   </body>
 </html>
