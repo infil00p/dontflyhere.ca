@@ -94,7 +94,7 @@ map.on('style.load', function() {
         map.on('click', function (e) {
           map.featuresAt(e.point, {
             radius: 5,
-            layers: ['airport-fills', 'parks']
+            layers: ['airport-fills', 'parks', 'fortmac-fills']
           }, function(err, features) {
             var display = "";
             if(!err || features.length) {
