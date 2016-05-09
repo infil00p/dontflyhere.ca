@@ -106,6 +106,9 @@ map.on('style.load', function() {
                 else if(features[i].layer.id == "parks-fills") {
                   display += "National Park: " + features[i].properties.NAME_E + "</br >";
                 }
+                else if(features[i].layer.id == "fortmac-fills") {
+                  display += "Fort McMurray Fire Exclusion Zone <br />";
+                }
               }
               if(display.length > 0) {
                 popup.setLngLat([e.lngLat.lng, e.lngLat.lat])
