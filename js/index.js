@@ -49,6 +49,12 @@ map.on('style.load', function() {
            "data" : "/json/airports.json"
          });
 
+         map.addSource("fortmac", {
+           "type" : "geojson",
+           "data" : "/json/fortmac.json"
+         });
+
+
          map.addLayer({
            "id" :"airport-fills",
            "type": "fill",
@@ -72,6 +78,18 @@ map.on('style.load', function() {
              "fill-opacity" : 0.2
            }
         });
+
+         map.addLayer({
+           "id" :"fortmac-fills",
+           "type": "fill",
+           "interactive": true,
+           "layout" : {},
+           "source" : "fortmac",
+           "paint" : {
+             "fill-color" : "#ff0000",
+             "fill-opacity" : 0.2
+           }
+         });
 
         map.on('click', function (e) {
           map.featuresAt(e.point, {
