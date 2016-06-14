@@ -54,6 +54,10 @@ map.on('style.load', function() {
            "data" : "/json/fortmac.json"
          });
 
+         map.addSource("bcwildfire", {
+             "type" : "geojson",
+             "data" : "/json/bcwildfire.json"
+         })
 
          map.addLayer({
            "id" :"airport-fills",
@@ -91,6 +95,20 @@ map.on('style.load', function() {
            }
          });
 
+         map.addLayer({
+           "id" :"bcwildfire-fills",
+           "type": "fill",
+           "interactive": true,
+           "layout" : {},
+           "source" : "bcwildfire",
+           "paint" : {
+             "fill-color" : "#ff0000",
+             "fill-opacity" : 0.5
+           }
+         });
+
+
+
         map.on('click', function (e) {
           map.featuresAt(e.point, {
             radius: 5,
@@ -108,6 +126,9 @@ map.on('style.load', function() {
                 }
                 else if(features[i].layer.id == "fortmac-fills") {
                   display += "Fort McMurray Fire Exclusion Zone <br />";
+                }
+                else if(features[i].layer.id == "bcwildfire-fills") {
+                  display += "BC Wildfire: Forest Fire! DO NOT FLY! <br />"
                 }
               }
               if(display.length > 0) {
