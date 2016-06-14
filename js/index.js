@@ -59,6 +59,12 @@ map.on('style.load', function() {
              "data" : "/json/bcwildfire.json"
          })
 
+         map.addSource("navcan_sfc", {
+             "type" : "geojson",
+             "data" : "/json/canadian_airspace_sfc.geojson"
+         })
+
+
          map.addLayer({
            "id" :"airport-fills",
            "type": "fill",
@@ -107,12 +113,25 @@ map.on('style.load', function() {
            }
          });
 
+         map.addLayer({
+           "id" :"navcan-fills",
+           "type": "fill",
+           "interactive": true,
+           "layout" : {},
+           "source" : "navcan_sfc",
+           "paint" : {
+             "fill-color" : "#ff0000",
+             "fill-opacity" : 0.2
+           }
+         });
+
+
 
 
         map.on('click', function (e) {
           map.featuresAt(e.point, {
             radius: 5,
-            layers: ['airport-fills', 'parks', 'fortmac-fills']
+            layers: ['airport-fills', 'parks', 'fortmac-fills', 'navcan-fills']
           }, function(err, features) {
             var display = "";
             if(!err || features.length) {
@@ -128,7 +147,15 @@ map.on('style.load', function() {
                   display += "Fort McMurray Fire Exclusion Zone <br />";
                 }
                 else if(features[i].layer.id == "bcwildfire-fills") {
-                  display += "BC Wildfire: Forest Fire! DO NOT FLY! <br />"
+                  display += "BC Wildfire: Forest Fire! DO NOT FLY! <br />";
+                }
+                else if(features[i].layer.id == "navcan-fills") {
+                  console.log(features[i]);
+                  display += "Restricted Airspace <br />"
+                    + features[i].properties.TITLE + "<br />"
+                    + "Type: " + features[i].properties.TYPE + "<br />"
+                    + "Class: " + features[i].properties.CLASS + "<br />";
+                  console.log(display);
                 }
               }
               if(display.length > 0) {
