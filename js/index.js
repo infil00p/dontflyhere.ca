@@ -15,6 +15,7 @@ var map = new mapboxgl.Map({
 });
 
 map.addControl(new mapboxgl.Navigation());
+map.addControl(new mapboxgl.Geocoder());
 
 //Grab your current location and set that as the new center
 
@@ -36,7 +37,6 @@ var fail = function(err)
 }
 navigator.geolocation.getCurrentPosition(success, fail, options);
 
-var popup = new mapboxgl.Popup();
 
 map.on('style.load', function() {
          map.addSource("parks",{
@@ -129,12 +129,9 @@ map.on('style.load', function() {
 
 
         map.on('click', function (e) {
-          map.featuresAt(e.point, {
-            radius: 5,
-            layers: ['airport-fills', 'parks', 'fortmac-fills', 'navcan-fills']
-          }, function(err, features) {
-            var display = "";
-            if(!err || features.length) {
+          var features = map.queryRenderedFeatures(e.point, {layers: ['airport-fills', 'parks', 'fortmac-fills', 'navcan-fills']});
+          var display = "";
+          if(features.length) {
               for(var i = 0; i < features.length; ++i) {
                 if(features[i].layer.id == "airport-fills") {
                   display += features[i].properties.Type + " : " 
@@ -150,7 +147,6 @@ map.on('style.load', function() {
                   display += "BC Wildfire: Forest Fire! DO NOT FLY! <br />";
                 }
                 else if(features[i].layer.id == "navcan-fills") {
-                  console.log(features[i]);
                   display += "Restricted Airspace <br />"
                     + features[i].properties.TITLE + "<br />"
                     + "Type: " + features[i].properties.TYPE + "<br />"
@@ -159,18 +155,13 @@ map.on('style.load', function() {
                 }
               }
               if(display.length > 0) {
-                popup.setLngLat([e.lngLat.lng, e.lngLat.lat])
+                var popup = new mapboxgl.Popup()
+                  .setLngLat([e.lngLat.lng, e.lngLat.lat])
                   .setHTML(display)
                   .addTo(map);
               }
-            }
-            else
-            {
-              popup.close();
-              return;
-            }
-          });
-        });
+        }
+      });
 });
 
 var close_about = function(e)
