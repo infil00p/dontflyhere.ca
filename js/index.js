@@ -129,7 +129,7 @@ map.on('style.load', function() {
 
 
         map.on('click', function (e) {
-          var features = map.queryRenderedFeatures(e.point, {layers: ['airport-fills', 'parks', 'fortmac-fills', 'navcan-fills']});
+          var features = map.queryRenderedFeatures(e.point, {layers: ['airport-fills', 'parks-fills', 'fortmac-fills', 'navcan-fills']});
           var display = "";
           if(features.length) {
               for(var i = 0; i < features.length; ++i) {
@@ -139,6 +139,7 @@ map.on('style.load', function() {
                 }
                 else if(features[i].layer.id == "parks-fills") {
                   display += "National Park: " + features[i].properties.NAME_E + "</br >";
+                  console.log("ParksCanada");
                 }
                 else if(features[i].layer.id == "fortmac-fills") {
                   display += "Fort McMurray Fire Exclusion Zone <br />";
@@ -151,10 +152,10 @@ map.on('style.load', function() {
                     + features[i].properties.TITLE + "<br />"
                     + "Type: " + features[i].properties.TYPE + "<br />"
                     + "Class: " + features[i].properties.CLASS + "<br />";
-                  console.log(display);
                 }
               }
               if(display.length > 0) {
+                console.log(display);
                 var popup = new mapboxgl.Popup()
                   .setLngLat([e.lngLat.lng, e.lngLat.lat])
                   .setHTML(display)
